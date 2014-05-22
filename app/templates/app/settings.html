@@ -1,0 +1,14 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Settings{% endblock %}
+
+{% block body_block %}
+	<h1>Edit Settings for {{ myprofile.username }}</h1>  
+	<form id="category_form" method="post" action="{% url 'app:settings' %}">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	
+	    <input type="submit" name="submit" class="button" value="Update Settings" />
+	</form>
+{% endblock %}

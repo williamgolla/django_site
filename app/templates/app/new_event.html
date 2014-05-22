@@ -1,0 +1,37 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Create New Event{% endblock %}
+
+{% block js %}
+<script>
+$(function() {
+    $(".datepicker").datepicker();
+});
+</script>
+{% endblock %}
+
+{% block body_block %}
+    {% if myprofile.location %}
+	<h1>Add an Event</h1>  
+	<form id="category_form" method="post" action="{% url 'app:new_event' %}">
+	
+	    {% csrf_token %}
+	    <!--{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	    {% endfor %}
+	
+	    {% for field in form.visible_fields %}
+		{{ field.errors }}
+		{{ field.help_text}}
+		{{ field }}
+	    {% endfor %}-->
+	    
+	    {{ form.as_p }}
+	    <p>Time format MM/DD/YYYY HH:MM (e.g. 04/24/2014 16:55)</p>
+	    <input type="submit" name="submit" class="button" value="Create Event" />
+	</form>
+    {% else %}
+        Create from admin panel.
+    {% endif %}
+{% endblock %}

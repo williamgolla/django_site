@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{% static 'app/js/jquery.redirect.min.js' %}"></script>   
+        <script type="text/javascript" src="{% static 'app/js/csrf.js' %}"></script>       
+        {% block js %}{% endblock %}
+        
+        <link type="text/css" rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+        <link type="text/css" rel="stylesheet" href="{% static 'app/default.css' %}" />
+	{% block css %}{% endblock %}
+    </head>
+
+    <body>
+	<div id="cont">
+	    <div id="top">
+		<div id="menu">
+		    {% if myprofile.location %}
+			<a class="no_underline" href="{% url 'app:user_detail' myprofile.id %}"><input type="button" class="button" value="{{myprofile.username}}"/></a>
+		    {% else %}
+			{{myprofile.username}}
+		    {% endif %}                
+		    <a class="no_underline" href="{% url 'app:users' %}"><input type="button" class="button" value="User List"/></a>
+		    <a class="no_underline" href="{% url 'app:events' %}"><input type="button" class="button" value="Event List"/></a>
+		    <a class="no_underline" href="{% url 'app:new_event' %}"><input type="button" class="button" value="Create Event"/></a>
+		    <a class="no_underline" href="{% url 'django_messages:messages' %}"><input type="button" class="button" value="Message Center"/></a>
+		</div>
+		<div id="logout">
+		    <a class="no_underline" href="{% url 'app:settings' %}"><input type="button" class="button" value="Settings"/></a>
+		    <a class="no_underline" href="{% url 'app:logout' %}"><input type="button" class="button" value="Logout"/></a>
+		</div>
+		<div id="success"></div>
+		<div id="error"></div>
+	    </div>
+	    
+	    <div id="bot">
+		{% block body_block %}{% endblock %}
+	    </div>   
+	</div>  
+    </body>
+</html>

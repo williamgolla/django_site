@@ -1,0 +1,26 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+{% load multifor %}
+{% block title %}Edit Your Comment{% endblock %}
+
+{% block js %}
+<script>
+$(function() {
+    $(".datepicker").datepicker();
+});
+</script>
+{% endblock %}
+
+
+{% block body_block %}
+
+	<h1>Edit Your Comment</h1>  
+	<form method="post" comment="{% url 'app:edit_comment' comment.id %}">
+	
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    
+	    <input type="submit" name="submit" class="button" value="Edit" />
+	</form>
+
+{% endblock %}

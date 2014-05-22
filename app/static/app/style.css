@@ -1,0 +1,138 @@
+li a {
+    color: green;
+}
+a:visited {color:red;}
+
+html { 
+  background: url("images/darkedinburgh_fireworks.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.two 
+{
+border-style:solid;
+border-width:medium;
+color:#FFCC99;
+width:710px;
+padding:10px;
+margin:auto;
+background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+            -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+            -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+            -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+            -webkit-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+            -webkit-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background: -moz-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+            -moz-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+            -moz-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+            -moz-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+            -moz-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+            -moz-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+            linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+            linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+            linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+            linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+            linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background-size: 20px 20px;
+background-color: #131313;
+-pie-background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px / 20px,
+                 linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px / 20px,
+                 linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px / 20px,
+                 linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px / 20px,
+                 linear-gradient(90deg, #1b1b1b 10px, transparent 10px) 0 0 / 20px,
+                 linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)
+                 0 0 / 20px #131313;
+behavior: url(/pie/PIE.htc);
+/*this pattern is from http://css3pie.com/demos/gradient-patterns/*/
+}
+
+
+.log
+{
+border-style:solid;
+border-width:medium;
+color:#FFCC99;
+width:710px;
+padding:10px;
+margin:auto;
+background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+            -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+            -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+            -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+            -webkit-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+            -webkit-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background: -moz-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+            -moz-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+            -moz-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+            -moz-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+            -moz-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+            -moz-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+            linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+            linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+            linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+            linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+            linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background-size: 20px 20px;
+background-color: #131313;
+-pie-background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px / 20px,
+                 linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px / 20px,
+                 linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px / 20px,
+                 linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px / 20px,
+                 linear-gradient(90deg, #1b1b1b 10px, transparent 10px) 0 0 / 20px,
+                 linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)
+                 0 0 / 20px #131313;
+behavior: url(/pie/PIE.htc);
+/*this pattern is from http://css3pie.com/demos/gradient-patterns/*/
+}
+
+.white
+{
+color: white;
+}
+
+
+
+
+.pm
+{
+border-style:solid;
+border-width:medium;
+color:black;
+border-color:#FFCC99;
+width:710px;
+padding:10px;
+margin:auto;
+background-size: 50px 50px;
+background-color: #CCFFFF;
+background-image: -webkit-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+-pie-background: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent) 0 0 / 50px #CCFFFF;
+behavior: url(/pie/PIE.htc);
+/*this pattern is from http://css3pie.com/demos/gradient-patterns/*/
+}
+
+table,th,td
+{
+border:1px solid #66FFCC;
+border-collapse:collapse;
+}
+th,td
+{
+padding:5px;
+}
+th
+{
+text-align:left;
+}
+caption
+{
+/* text-align:left; */
+font-weight:bold;
+}

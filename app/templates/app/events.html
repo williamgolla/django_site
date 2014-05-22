@@ -1,0 +1,90 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Events{% endblock %}
+
+{% block js %}
+{% if msg == "deleted" %}
+<script type="text/javascript" src="{% static 'app/js/events.js' %}"></script>
+{% endif %}
+<script type="text/javascript" src="{% static 'app/js/search.js' %}"></script>
+{% endblock %}
+
+{% block body_block %}
+
+<b>Search by Event name or Location</b><br>
+Event name: <input id="searchN" type="text"> Location: <input id="searchL" type="text"><button id="searchEvents">Search</button><br>
+{% if in_progress or upcoming or past %}  
+	{% if in_progress%}
+	<table id="alt"><caption>Events in Progress</caption>
+   	<thead>
+        	<tr><th>Event Name</th><th>Location</th><th>Start Time</th><th>End Time</th><th>Created By</th></tr>
+    	</thead>
+    	<tbody>
+	{% for event in in_progress %}
+    	<tr>
+        	<td><a href="{% url 'app:event_detail' event.id %}">{{ event.name }}</a></td>
+        	<td>{{ event.location }}</td>
+        	<td>{{ event.event_time }}</td>
+        	<td>{{ event.end_time }}</td>
+		<td><a href="{% url 'app:user_detail' event.created_by.id %}">{{ event.created_by }}</a></td>
+    	</tr>
+
+    	{% endfor %}
+	</table>
+	{% else %}
+	<p><b>Events in Progress</b> <br>There are no events in progress.</p>
+	{% endif %}
+	<br><br>
+ 
+	{% if upcoming %}
+	<table id="alt"><caption>Upcoming Events</caption>
+   	<thead>
+        	<tr><th>Event Name</th><th>Location</th><th>Start Time</th><th>End Time</th><th>Created By</th></tr>
+    	</thead>
+    	<tbody>
+	{% for event in upcoming %}
+    	<tr>
+        	<td><a href="{% url 'app:event_detail' event.id %}">{{ event.name }}</a></td>
+        	<td>{{ event.location }}</td>
+        	<td>{{ event.event_time }}</td>
+        	<td>{{ event.end_time }}</td>
+		<td><a href="{% url 'app:user_detail' event.created_by.id %}">{{ event.created_by }}</a></td>
+    	</tr>
+
+    	{% endfor %}
+	</table>
+	{% else %}
+	<p><b>Upcoming Events</b> <br>There are no upcoming events.</p>
+	{% endif %}
+
+
+	<br><br>
+	
+	{% if past %}
+	<table id="alt"><caption>Past Events</caption>
+   	<thead>
+        	<tr><th>Event Name</th><th>Location</th><th>Start Time</th><th>End Time</th><th>Created By</th></tr>
+    	</thead>
+    	<tbody>
+	{% for event in past %}
+    	<tr>
+        	<td><a href="{% url 'app:event_detail' event.id %}">{{ event.name }}</a></td>
+        	<td>{{ event.location }}</td>
+        	<td>{{ event.event_time }}</td>
+        	<td>{{ event.end_time }}</td>
+		<td><a href="{% url 'app:user_detail' event.created_by.id %}">{{ event.created_by }}</a></td>
+    	</tr>
+    
+        {% endfor %}
+	</table>
+	{% else %}
+	<p><b>Past Events</b> <br>There are no past events.</p>
+	{% endif %}
+
+
+    
+{% else %}
+    <p>There are no events...</p>
+{% endif %}
+{% endblock %}

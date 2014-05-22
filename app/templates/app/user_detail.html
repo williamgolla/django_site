@@ -1,0 +1,84 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ profile.username }}{% endblock %}
+{% block body_block %}
+    <div>
+	<strong>Username:</strong> {{ profile.username }}<br />
+	<strong>Email:</strong> {{ profile.email }}<br />
+	<strong>Location:</strong> {{ profile.location }}<br />
+	<strong>Member Since:</strong> {{ profile.date_joined }}<br />
+	<strong>Last Activity:</strong> {{ profile.last_login }}<br />
+	<strong>Reputation:</strong> {{ rep }}<br />
+    </div>
+    <br>
+    <hr />
+    
+    <div>
+	{% if events_created%}
+	    <table id="alt" style="vertical-align:top; table-layout: fixed" valign="top"><caption>Events created by {{ profile.username }}:</caption>
+	    <thead>
+		    <tr><th>Event Name</th><th>Location</th><th>Start Time</th><th>End Time</th></tr>
+	    </thead>
+	    <tbody>
+	    {% for event in events_created %}
+		<tr>
+		    <td><a href="{% url 'app:event_detail' event.id %}">{{ event.name }}</a></td>
+		    <td>{{ event.location }}</td>
+		    <td>{{ event.event_time }}</td>
+		    <td>{{ event.end_time }}</td>
+		</tr>	    
+	    {% endfor %}
+	    </table>
+	{% else %}
+	    <p><b>Events created by {{ profile.username }}:</b> <br>None</p>
+	{% endif %}
+    </div>
+    <br><br>
+    <div>
+	{% if events_participated %}
+	    <table id="alt"><caption>Events that {{ profile.username }} is participating in:</caption>
+	    <thead>
+		    <tr><th>Event Name</th><th>Location</th><th>Start Time</th><th>End Time</th></tr>
+	    </thead>
+	    <tbody>
+	    {% for event in events_participated %}
+		<tr>
+		    <td><a href="{% url 'app:event_detail' event.id %}">{{ event.name }}</a></td>
+		    <td>{{ event.location }}</td>
+		    <td>{{ event.event_time }}</td>
+		    <td>{{ event.end_time }}</td>
+		</tr>
+	    {% endfor %}	    
+	    </table>
+	{% else %}
+	    <p><b>Events that {{ profile.username }} is participating in:</b> <br>None</p>
+	{% endif %}
+    </div>
+    <hr />
+    <br>
+    <div>
+        <p><b>{{ profile.username }}'s friends:</b>
+        {% if friends %}
+            <ul>
+              {% for friend in friends %}
+                <li><a href="{% url 'app:user_detail' friend.id %}">{{ friend.username }}</a></li>
+              {% endfor %}
+            </ul>
+        {% else %}
+            <br>{{ profile.username }} has no friends.
+        {%  endif %}</p></div>
+    <!-- <div>
+	Feedback given by {{ profile.username }}:
+	{% for fb in feedback_by %}
+	    <li>{{ fb }}</a></li>
+	{% endfor %}
+    </div>
+    <hr />
+    <div>
+	Feedback given to {{ profile.username }}:
+	{% for fb in feedback_for %}
+	    <li>{{ fb }}</a></li>
+	{% endfor %}
+    </div> -->
+{% endblock %}

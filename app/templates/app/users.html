@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'app/js/search.js' %}"></script>
+{% endblock %}
+
+{% block title %}Users{% endblock %}
+
+{% block body_block %}
+    <b>Search by username or Location</b><br>
+    username: <input id="searchN" type="text"> Location: <input id="searchL" type="text"><button id="searchUsers">Search</button><br>
+    {% if users %}
+        <table id="alt">
+            <thead>
+                <tr><th>Username</th><th>Join Date</th><th>Location</th><th>last activity</th></tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                    <td><a href="{% url 'app:user_detail' user.id %}">{{ user.username }}</a></td>
+                    <td>{{ user.date_joined }}</td>
+                    <td>{{ user.location }}</td>
+                    <td>{{ user.last_login }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no users...</p>
+    {% endif %}
+{% endblock %}

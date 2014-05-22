@@ -1,0 +1,7 @@
+@import url("default.css");
+
+#top {
+    text-align:right;
+    background: url("images/washi.png");
+    background-repeat: repeat;
+}

@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+    <div class="pm">
+        <a class="no_underline" href="{% url 'django_messages:compose' %}"><input type="button" class="button" value="Compose"/></a>
+        <a class="no_underline" href="{% url 'django_messages:inbox' %}"><input type="button" class="button" value="Inbox"/></a>
+        <a class="no_underline" href="{% url 'django_messages:outbox' %}"><input type="button" class="button" value="Sent"/></a>
+        <a class="no_underline" href="{% url 'django_messages:trash' %}"><input type="button" class="button" value="Trash"/></a>
+    </div>
+    {% block content %}
+    {% endblock %}
+{% endblock %}

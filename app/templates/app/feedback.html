@@ -1,0 +1,95 @@
+{% extends 'app/base.html' %}
+{% load multifor %}
+{% load staticfiles %}
+
+{% block body_block %}
+    {% if errors %}
+        {% for err, errval in errors.items %}
+            {{ errval }} <br />
+        {% endfor %}
+        <a href="{% url 'app:event_detail' event.id %}"><input type="button" class="button" value="Back to Action"/></a><br/>
+        {% if errors.too_late %}
+            <br />
+            {% if existing_feedback %}
+                <strong>You left the following feedback:</strong> <br/><br/>
+                {% for feedback in existing_feedback %}
+                    {{ feedback.feedback_for }}: {{ feedback.nice_fb }} <br/>
+                    {% if feedback.comment %}
+                        Comment: {{ feedback.comment }} <br/><br/>
+                    {% else %}
+                        No comment <br/><br/>
+                    {% endif %}                        
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <h1>Leave Feedback</h1>  
+        <a href="{% url 'app:event_detail' event.id %}"><input type="button" class="button" value="Back to Action"/></a>
+        <form method="post" action="{% url 'app:feedback' event.id%}">
+        {% csrf_token %}
+
+        {{ formset.management_form }}
+        <table>
+            <tbody>
+                {% for form in formset; participant in participants %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                    <tr><td>
+                    {{ form.id }}
+                    {{ form.errors }}
+                        <table>
+                            <thead>
+                            <tr>
+                            <th><input id="id_form-{{forloop.counter0}}-feedback_for" name="form-{{forloop.counter0}}-feedback_for" type="hidden" value="{{participant.id}}" />
+                            <strong>{{ participant.username }}</strong></th>
+                            <th>{{ form.comment.label }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <td>
+                            {% for radio in form.feedback %}
+                                {{ radio }} <br />
+                            {% endfor %}<br />
+                        </td>
+                        <td>
+                        {{ form.comment }}
+                        </td>
+                        </tbody>
+                        </table>
+                    </td>
+                    {% else %}
+                    <td>
+                    {{ form.id }}
+                    {{ form.errors }}
+                        <table>
+                            <thead>
+                            <tr>
+                            <th><input id="id_form-{{forloop.counter0}}-feedback_for" name="form-{{forloop.counter0}}-feedback_for" type="hidden" value="{{participant.id}}" /> 
+                            <strong>{{ participant.username }}</strong></th>
+                        <th>{{ form.comment.label }}</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <td>
+                        {% for radio in form.feedback %}
+                            {{ radio }} <br />
+                        {% endfor %}<br />
+                        </td>
+                        <td>
+                        {{ form.comment }}
+                        </td>
+                        </tbody>
+                        </table>
+                    </td></tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if existing_feedback %}
+            <input type="submit" name="submit" class="button" value="Update Feedback" />
+        {% else %}
+            <input type="submit" name="submit" class="button" value="Submit Feedback" />
+        {% endif %}
+        </form>
+    {% endif %}
+{% endblock %}

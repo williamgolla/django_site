@@ -1,0 +1,189 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ event.name }}{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+var event_id = "{{event.id}}";
+var event_list = "{% url 'app:events' %}";
+var edit_url = "{% url 'app:edit_event' %}";
+var join_url = "{% url 'app:join_event' %}";
+var leave_url = "{% url 'app:leave_event' %}";
+var delete_url = "{% url 'app:delete_event' %}";
+var promote_url = "{% url 'app:promote' %}";
+var demote_url = "{% url 'app:demote' %}";
+var kick_url = "{% url 'app:kick' %}";
+var delete_comment_url = "{% url 'app:delete_comment' %}";
+</script>
+<script type="text/javascript" src="{% static 'app/js/event_detail.js' %}"></script>
+{% endblock %}
+
+{% block body_block %}
+    <div id="details">
+    <strong>Name: </strong>{{ event.name }}<br />
+    <strong>Description: </strong>{{ event.description }}<br />
+    <strong>Location: </strong>{{ event.location }}<br />
+    <strong>Event time: </strong>{{ event.event_time|date:'l, F j, Y \a\t g:i A' }}<br />
+    <strong>End time: </strong>{{ event.end_time|date:'l, F j, Y \a\t g:i A' }}<br /><br />
+    </div>
+    
+    <div id="edit_details" style="display: none;">
+	<table>
+	    <tr>
+		<form id="edit_form">
+	    	    <div id="form_errors"></div>
+	    	    {{ editform.as_p }}
+	    	    <input id="save" type="submit" class="button" value="Update"/>	    
+		</form>
+		<input id="cancel" type="submit" class="button" value="Cancel"/>
+	   </tr>
+	</table>
+    </div>
+    
+    <strong>Created by: </strong><a href="{% url 'app:user_detail' event.created_by.id %}">{{ event.created_by }}</a><br />
+    <strong>Created: </strong>{{ event.created }}<br />
+    <strong><p id="changed">Last Changed: </strong>{{ event.modified }}</p>    
+    {% if not event_over and not in_progress and myprofile in owners %}
+	<input id="edit" type="button" class="button" value="Edit Event"/>
+    {% endif %}
+    {% if not event_over and not in_progress and myprofile in owners %}
+	<input id="delete" type="submit" class="button" value="Delete Event"/>
+    {% endif %}
+    
+    <hr/>
+    
+    <div style="overflow: hidden;">
+    <div id="owners">
+        <l_orange>Owners:</l_orange>
+        <table id="alt_no_border" cellspacing="1">
+        {% for owner in owners %}
+            <tr>
+            <td><a href="{% url 'app:user_detail' owner.id %}">{{ owner.username }}</a></td>
+	    {% if not event_over and not in_progress and myprofile in owners and myprofile != owner %}
+            <td>
+                <form class="demote">
+                    <input type="hidden" name="user_id" value="{{ owner.id}}">
+                    <input type="hidden" name="event_id" value="{{ event.id }}">
+                    <input type="submit" class="smaller_button" value="Demote"/>
+                </form>
+            </td>
+	    {% endif %}
+	    {% if not event_over and myprofile in owners and myprofile != owner %}
+            <td>
+                <form class="kick">
+                    <input type="hidden" name="user_id" value="{{ owner.id }}">
+                    <input type="hidden" name="event_id" value="{{ event.id }}">
+                    <input type="submit" class="smaller_button" value="Kick"/>
+                </form>
+            </td>
+	    {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    
+    <div id="participants">
+	<l_orange>Participants:</l_orange>
+        <table id="alt_no_border" cellspacing="1">
+        {% for participant in participants %}
+            <tr>
+            <td><a href="{% url 'app:user_detail' participant.id %}">{{ participant.username }}</a></td>
+	    {% if not event_over and not in_progress and myprofile in owners and myprofile != participant %}
+            <td>
+                <form class="promote">
+                    <input type="hidden" name="user_id" value="{{participant.id}}">
+                    <input type="hidden" name="event_id" value="{{event.id}}">
+                    <input type="submit" class="smaller_button" value="Promote"/>
+                </form>
+            </td>
+	    {% endif %}
+	    {% if not event_over and myprofile in owners and myprofile != participant %}
+            <td>
+                <form class="kick">
+                    <input type="hidden" name="user_id" value="{{ participant.id}}">
+                    <input type="hidden" name="event_id" value="{{event.id}}">
+                    <input type="submit" class="smaller_button" value="Kick"/>
+                </form>
+            </td>
+	    {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    </div>
+    
+    <hr/>
+    
+    <div id="buttons">
+	{% if not event_over and myprofile not in participants %}<input id="join" type="submit" class="button" value="Join Event"/>{% endif %}
+	{% if not event_over and myprofile in participants %}<input id="leave" type="submit" class="button" value="Leave Event"/>{% endif %}
+	{% if event_over %}<form event="{% url 'app:feedback' event.id %}"><input id="feedback" type="submit" class="button" value="Leave Feedback"/></form>{% endif %}
+    </div>
+    
+    <br/>
+    
+    <div id="post_comment">
+	<comment_caption>Add a Comment</comment_caption> 
+	<form method="post" event="{% url 'app:comment' event.id%}">
+	    
+	    {% csrf_token %}
+	    {{ comment_form.as_p }}
+		
+	    <input type="submit" name="submit" class="button" value="Post" />
+	</form>
+    </div>
+    
+    <br/>
+    
+    <div id="comm"><comment_caption>Comments</comment_caption>
+
+    <table id="comments" id="outer">
+        {% for comment in comments reversed %}
+	    <tr>
+		<table id="inner">
+		    <tr class="greyish">
+			<th rowspan="2" class="inner_left"><a class="no_underline" href="{% url 'app:user_detail' comment.author.id %}"><input type="button" class="button_green" value="{{ comment.author }}"/></a></th>
+			<td>
+			    <table id="subject">
+				<tr>
+				    <td><blue>Subject:</blue> {{ comment.subject }}</td>
+				    <td class="subject_right"><blue>{{ comment.created }}</blue></td>
+				</tr>
+			    </table>
+			</td>
+		        
+		    </tr>
+		    <tr class="bluish">
+			<td>
+			    <table id="mess">
+				<tr>
+				    <td><br> {{ comment.message }}<br><br><td>
+				</tr>
+				{% if myprofile in owners or myprofile.id == comment.author.id %}
+				<tr class="up">
+				    <td style="width=300px"></td>
+				    <td class="buttons_right">
+
+					<form class="delete_comment">
+                    			<input type="hidden" name="comment_id" value="{{comment.id}}">
+                    			<input type="hidden" name="event_id" value="{{event.id}}">
+                    			<input type="submit" class="red_button" value="Delete"/>
+                			</form>
+				    </td>
+				    <td class="buttons_right">
+					<a class="no_underline" href="{% url 'app:edit_comment' comment.id %}"><input type="submit" class="red_button" value="Edit"/></a>
+				    </td>
+				</tr>
+				{% endif %}
+			    </table>
+			</td>
+
+		    </tr>
+
+		</table>
+	    </tr><br>
+	{% endfor %}
+    </table>
+    </div>
+{% endblock %}
